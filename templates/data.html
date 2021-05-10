@@ -1,0 +1,117 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<h1>Declaration of Plagiarism</h1>
+<h2>I, as the student in the following list, declare that this assignment is my ORIGINAL WORK that i further declare that : </h2>
+<p>i. I do not copy from any other students’ work or from any other sources</p>
+<p>ii. Cited text and references are from the sources I have referred to and made appropriate acknowledgment of</p>
+<p>iii. I have read and understood the Polytechnic regulations and penalties on plagiarism as stated in Clause 16.2, Clause 17.3 and Clause 17.4 of Polytechnic Examination & Assessment Rules and Regulation (Diploma) (6th Edition, June 2019) </p>
+
+
+<div class="container">
+  <div class="row">
+    <div class="col md-12">
+      <div class="jumbotron p-3">
+        <h2>Declaration List: <button type="button" name="button" class="btn btn-success float-right" data-toggle="modal" data-target="#mymodal">Add Your Details</button></h2>
+<table class="table table-hover table-dark">
+          <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Registration Number</th>  
+            <th>Assessment Type</th>          
+            <th>Signed</th>
+            
+          </tr>
+          {% for row in data_list %}
+                
+          <tr>
+                  <td>{{row.id}}</td>
+                  <td>{{row.date}}</td>
+                  <td>{{row.name}}</td>  
+                  <td>{{row.matric}}</td> 
+                  <td>{{row.asmntType}}</td> 
+
+                  {% if row.done == True %} 
+                 <td> Yeay.Signed! </td> 
+
+                 {% else %} 
+                 <td>Not Yet :(</td> 
+                 {% endif %}
+                  <td>
+                   
+                  
+                   <a href="/done/{{ row.id }}" class="btn btn-success btn-xs">Click to accept NO to plagiarism </a>
+
+
+                  </td>
+           
+                 
+
+          </tr>
+
+            {% endfor %}
+    </table>
+      <!-- Modal for add task -->
+      <div id="mymodal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Add Task</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/insert" method="POST" >
+                <div class="form-group">
+                  <label>Student Name</label>
+                  <input type="text" class="form-control" name="name" required="1">
+                  <label>Matric number</label>
+                  <input type="text" class="form-control" name="matric" required="1">
+                  <div class = "field">
+                    <label class = "label">Assesment</label>
+                     <div class = "control"> 
+                        <div class="select">
+                          <select name="asmntType">
+                            {% for key in asmntType %}
+                            <option value="{{ key }}" 
+                            {% if (key == key.asmntType) %} 
+                              selected="selected"
+                            {% endif %}> 
+                            {{ key }}
+                            </option>
+                            {% endfor %}
+
+                          </select>
+                        </div>
+                     </div>
+                    
+                  </div>
+
+                </div>
+                
+                  <button type="submit" class="btn btn-primary">Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+    {% endblock %}
